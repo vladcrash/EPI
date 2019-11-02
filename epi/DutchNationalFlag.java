@@ -8,9 +8,36 @@ import java.util.List;
 public class DutchNationalFlag {
   public enum Color { RED, WHITE, BLUE }
 
-  public static void dutchFlagPartition(int pivotIndex, List<Color> A) {
-    // TODO - you fill in here.
-    return;
+  public static void dutchFlagPartition(int pivotIndex, List<Color> arr) {
+    Color pivot = arr.get(pivotIndex);
+    List<Color> less = new ArrayList<>();
+    List<Color> equal = new ArrayList<>();
+    List<Color> more = new ArrayList<>();
+
+    for (Color item : arr) {
+      if (item.ordinal() < pivot.ordinal()) {
+        less.add(item);
+      } else if (item.ordinal() == pivot.ordinal()) {
+        equal.add(item);
+      } else {
+        more.add(item);
+      }
+    }
+
+    int j = 0;
+    for (Color item : less) {
+      arr.set(j, item);
+      j++;
+    }
+    for (Color item : equal) {
+      arr.set(j, item);
+      j++;
+    }
+    for (Color item : more) {
+      arr.set(j, item);
+      j++;
+    }
+
   }
   @EpiTest(testDataFile = "dutch_national_flag.tsv")
   public static void dutchFlagPartitionWrapper(TimedExecutor executor,
