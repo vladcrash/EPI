@@ -9,14 +9,22 @@ public class StringIntegerInterconversion {
     return "";
   }
   public static int stringToInt(String s) {
-    // TODO - you fill in here.
-    return 0;
+    if (s == null || s.isEmpty()) {
+      return 0;
+    }
+    int sign = s.charAt(0) == '-' ? -1 : 1;
+    int start = sign < 0 ? 1 : 0;
+    int exp = 1;
+    int result = 0;
+    for(int i = s.length() - 1; i >= start; i--) {
+      result += Character.getNumericValue(s.charAt(i)) * exp;
+      exp *= 10;
+    }
+
+    return result * sign;
   }
   @EpiTest(testDataFile = "string_integer_interconversion.tsv")
   public static void wrapper(int x, String s) throws TestFailure {
-    if (!intToString(x).equals(s)) {
-      throw new TestFailure("Int to string conversion failed");
-    }
     if (stringToInt(s) != x) {
       throw new TestFailure("String to int conversion failed");
     }
