@@ -3,26 +3,43 @@ import epi.test_framework.EpiTest;
 import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
-import java.util.List;
-import java.util.NoSuchElementException;
+
+import java.util.*;
+
 public class StackWithMax {
 
   public static class Stack {
+
+    private final LinkedList<Integer> items;
+    private final PriorityQueue<Integer> pq;
+
+    Stack() {
+        items = new LinkedList<>();
+        pq = new PriorityQueue<>((a, b) -> b - a);
+    }
+
     public boolean empty() {
-      // TODO - you fill in here.
-      return true;
+      return items.isEmpty();
     }
+
     public Integer max() {
-      // TODO - you fill in here.
-      return 0;
+      return pq.isEmpty() ? 0 : pq.peek();
     }
+
     public Integer pop() {
-      // TODO - you fill in here.
-      return 0;
+      if (items.isEmpty()) {
+          return 0;
+      }
+
+      int removed = items.removeLast();
+      pq.remove(removed);
+
+      return removed;
     }
+
     public void push(Integer x) {
-      // TODO - you fill in here.
-      return;
+      items.add(x);
+      pq.offer(x);
     }
   }
   @EpiUserType(ctorParams = {String.class, int.class})
